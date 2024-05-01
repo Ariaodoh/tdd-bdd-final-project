@@ -135,7 +135,7 @@ class TestProductModel(unittest.TestCase):
         self.assertEqual(len(products), 1)
         self.assertEqual(products[0].id, original_id)
         self.assertEqual(products[0].description, "Bestseller")
-            
+
     # Test case to delete a product
     def test_delete_a_product(self):
         """It should Delete a Product"""

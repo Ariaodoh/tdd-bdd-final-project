@@ -18,12 +18,12 @@
 """
 Product Store Service with UI
 """
+import logging
 from flask import jsonify, request, abort
 from flask import url_for  # noqa: F401 pylint: disable=unused-import
 from service.models import Product, Category
 from service.common import status  # HTTP Status Codes
 from . import app
-import logging
 
 
 ######################################################################
@@ -34,6 +34,7 @@ def healthcheck():
     """Let them know our heart is still beating"""
     return jsonify(status=200, message="OK"), status.HTTP_200_OK
 
+
 ######################################################################
 # H O M E   P A G E
 ######################################################################
@@ -41,6 +42,7 @@ def healthcheck():
 def index():
     """Base URL for our service"""
     return app.send_static_file("index.html")
+
 
 ######################################################################
 #  U T I L I T Y   F U N C T I O N S
@@ -62,6 +64,7 @@ def check_content_type(content_type):
         status.HTTP_415_UNSUPPORTED_MEDIA_TYPE,
         f"Content-Type must be {content_type}",
     )
+
 
 ######################################################################
 # C R E A T E   A   N E W   P R O D U C T
@@ -86,8 +89,9 @@ def create_products():
 
     # Uncomment this line of code once you implement READ A PRODUCT
     location_url = url_for("get_products", product_id=product.id, _external=True)
-    location_url = "/"  # delete once READ is implemented
+    # location_url = "/"  # delete once READ is implemented
     return jsonify(message), status.HTTP_201_CREATED, {"Location": location_url}
+
 
 ######################################################################
 # LIST PRODUCTS
@@ -130,6 +134,7 @@ def list_products():
     app.logger.info("[%s] Products returned", len(results))
     return results, status.HTTP_200_OK
 
+
 ######################################################################
 # READ A PRODUCT
 ######################################################################
@@ -148,6 +153,7 @@ def get_products(product_id):
 
     app.logger.info("Returning product: %s", product.name)
     return product.serialize(), status.HTTP_200_OK
+
 
 ######################################################################
 # UPDATE AN EXISTING PRODUCT
@@ -170,6 +176,7 @@ def update_products(product_id):
     product.id = product_id
     product.update()
     return product.serialize(), status.HTTP_200_OK
+
 
 ######################################################################
 # DELETE A PRODUCT
